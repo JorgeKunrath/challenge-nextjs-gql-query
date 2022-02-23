@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { insertUser, updateUser } from '../../services/users'
-import SidebarOverlay from '../common/SidebarOverlay'
+import SidebarOverlay from './SidebarOverlay'
 
 const Form = styled.form`
   &,
