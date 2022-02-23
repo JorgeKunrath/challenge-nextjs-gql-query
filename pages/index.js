@@ -1,8 +1,7 @@
 import Head from 'next/head'
 import styled from 'styled-components'
 import Layout from '../src/components/common/Layout'
-
-const MOCK_playerCount = 4
+import { useGetUsers } from '../src/services/users'
 
 const Players = styled.div`
   background-color: white;
@@ -22,6 +21,7 @@ const Players = styled.div`
   }
 `
 export default function Home() {
+  const { data, error, isLoading } = useGetUsers()
   return (
     <div className="container">
       <Head>
@@ -39,7 +39,9 @@ export default function Home() {
         </p>
         <Players>
           <p>TOTAL PLAYERS</p>
-          <p>{MOCK_playerCount}</p>
+          {isLoading && <p>loading</p>}
+          {error && <p>{error.message}</p>}
+          {data && <p>{data.length}</p>}
         </Players>
       </Layout>
     </div>

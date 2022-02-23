@@ -1,9 +1,17 @@
 // import App from 'next/app'
 
+import { QueryClient, QueryClientProvider } from 'react-query'
+
 import '../src/styles/global.scss'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+const queryClient = new QueryClient()
+
+function App({ Component, pageProps }) {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Component {...pageProps} />
+    </QueryClientProvider>
+  )
 }
 
 // Only uncomment this method if you have blocking data requirements for
@@ -11,11 +19,11 @@ function MyApp({ Component, pageProps }) {
 // perform automatic static optimization, causing every page in your app to
 // be server-side rendered.
 //
-// MyApp.getInitialProps = async (appContext) => {
+// App.getInitialProps = async (appContext) => {
 //   // calls page's `getInitialProps` and fills `appProps.pageProps`
 //   const appProps = await App.getInitialProps(appContext);
 //
 //   return { ...appProps }
 // }
 
-export default MyApp
+export default App

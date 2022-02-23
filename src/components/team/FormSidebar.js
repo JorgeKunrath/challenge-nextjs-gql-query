@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
+import { insertUser, updateUser } from '../../services/users'
 import SidebarOverlay from '../common/SidebarOverlay'
 
 const Form = styled.form`
@@ -11,26 +12,29 @@ const Form = styled.form`
   }
 `
 
-export default function FormSidebar({ sidebarPlayer, setSidebarPlayer }) {
+export default function FormSidebar({ sidebarPlayer, setSidebarPlayer, refetch }) {
   const [formData, setFormData] = useState({
     name: sidebarPlayer.player?.name ?? '',
     rocket: sidebarPlayer.player?.rocket ?? '',
     twitter: sidebarPlayer.player?.twitter ?? '',
   })
 
-  const handleSave = () => {
-    console.log('formData', formData)
-
+  const handleSave = async () => {
     if (sidebarPlayer.type === 'new') {
-      // TODO: insertion
+      await insertUser(formData)
+      refetch()
     }
 
     if (sidebarPlayer.type === 'edit') {
-      // TODO: make request, get response and update players
+      await updateUser(sidebarPlayer.player.id, formData)
+      refetch()
     }
 
-    // setSidebarPlayer({ type: false, player: null });
+    setSidebarPlayer({ type: false, player: null })
   }
+
+  const updateState = (key) => (event) =>
+    setFormData((data) => ({ ...data, [key]: event.target.value }))
 
   if (!sidebarPlayer.type) return null
   return (
@@ -48,7 +52,7 @@ export default function FormSidebar({ sidebarPlayer, setSidebarPlayer }) {
             type="text"
             name="name"
             value={formData.name}
-            onChange={(e) => setFormData((data) => ({ ...data, name: e.target.value }))}
+            onChange={updateState('name')}
           />
         </label>
         <label>
@@ -57,7 +61,7 @@ export default function FormSidebar({ sidebarPlayer, setSidebarPlayer }) {
             type="text"
             name="rocket"
             value={formData.rocket}
-            onChange={(e) => setFormData((data) => ({ ...data, rocket: e.target.value }))}
+            onChange={updateState('rocket')}
           />
         </label>
         <label>
@@ -66,9 +70,7 @@ export default function FormSidebar({ sidebarPlayer, setSidebarPlayer }) {
             type="text"
             name="twitter"
             value={formData.twitter}
-            onChange={(e) =>
-              setFormData((data) => ({ ...data, twitter: e.target.value }))
-            }
+            onChange={updateState('twitter')}
           />
         </label>
       </Form>
