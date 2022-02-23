@@ -29,13 +29,13 @@ export default function Home() {
       </Head>
 
       <Layout>
-        <h1>Welcome Matthew Watkings!</h1>
+        <h1>Welcome!</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tin cidunt
           vehicula eros. Cras tristique tincidunt velit non egestas. In dignissim et enim
           nec rutrum. Praesent venenatis, sapien eget feugiat laoreet, purus eros
           malesuada lectus, non sollicitudin dolor est vel purus. Nunc quis molestie
-          metus.{' '}
+          metus.
         </p>
         <Players>
           <p>TOTAL PLAYERS</p>
@@ -43,6 +43,12 @@ export default function Home() {
           {error && <p>{error.message}</p>}
           {data && <p>{data.length}</p>}
         </Players>
+        <p>
+          Source:{' '}
+          <a href="https://github.com/JorgeKunrath/challenge-nextjs-gql-query">
+            https://github.com/JorgeKunrath/challenge-nextjs-gql-query
+          </a>
+        </p>
       </Layout>
     </div>
   )
